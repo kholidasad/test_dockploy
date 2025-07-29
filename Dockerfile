@@ -14,6 +14,5 @@ COPY . .
 # Paparkan port yang akan digunakan aplikasi
 EXPOSE 5000
 
-# Perintah untuk menjalankan aplikasi (sesuai dengan Procfile)
-# Ini hanya sebagai fallback jika Procfile tidak ada, tapi tetap bagus untuk didefinisikan
+# Ini adalah perintah fallback, Procfile akan mengambil alih di DocPloy
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
