@@ -1,0 +1,16 @@
+version: '3.8' # Versi Docker Compose, '3.8' adalah versi yang umum dan kompatibel
+
+services:
+  web: # Nama service, bisa diganti tapi 'web' sudah umum untuk aplikasi web
+    build: . # Docker Compose akan mencari Dockerfile di direktori saat ini
+    ports:
+      - "8000:5000" # Memetakan port 8000 di mesin lokal ke port 5000 di dalam container
+    volumes:
+      - .:/app # Memasang (mount) direktori proyek lokal ke direktori /app di dalam container.
+               # Ini sangat berguna untuk pengembangan karena perubahan kode lokal akan langsung terlihat tanpa perlu rebuild container.
+    environment:
+      # Opsional: Jika aplikasi Flask butuh variabel lingkungan lain, definisikan di sini.
+      # Misalnya, FLASK_ENV=development untuk mode debugging Flask
+      FLASK_DEBUG: 1 # Mengaktifkan mode debug Flask jika diperlukan (restart otomatis pada perubahan kode)
+    command: gunicorn --bind 0.0.0.0:5000 app:app # Perintah untuk menjalankan aplikasi
+      # Perhatian: Kita tidak menggunakan $PORT di sini karena ini untuk lokal, dan port 5000 sudah di-expose di Dockerfile.
